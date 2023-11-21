@@ -154,18 +154,77 @@ def MonitoramentoSono(id):
         with open(f"dadoscli{id}.json", "r", encoding='utf-8') as f:
             dados = json.load(f)
 
-    valores_rotacoes = dados[0]['Dia 1']['dados dos sensores']["rotacoes"]
+    for i in range (0, len(dados), 1):
+        print(f"\n---- Dia {i+1} ----\n")
+        valores_rotacoes = dados[i][f'Dia {i+1}']['dados dos sensores']["rotacoes"]
+        valores_aceleracao_x = dados[i][f'Dia {i+1}']['dados dos sensores']["aceleracoes_x"]
+        valores_aceleracao_y = dados[i][f'Dia {i+1}']['dados dos sensores']["aceleracoes_y"]
+        valores_aceleracao_z = dados[i][f'Dia {i+1}']['dados dos sensores']["aceleracoes_z"]
+        valores_iluminacao = dados[i][f'Dia {i+1}']['dados dos sensores']["iluminacoes"]
 
-    contador_rotacao = 0
+        contador_rotacao = contador_acel1 = contador_acel2 = contador_acel3 = contador_ilum = 0
+        limiar = 2
 
-    valores_rotacoes = [float(valor) for valor in valores_rotacoes]
+        valores_rotacoes = [float(valor) for valor in valores_rotacoes]
+        valores_aceleracao_x = [float(valor) for valor in valores_aceleracao_x]
+        valores_aceleracao_y = [float(valor) for valor in valores_aceleracao_y]
+        valores_aceleracao_z = [float(valor) for valor in valores_aceleracao_z]
+        valores_iluminacao = [float(valor) for valor in valores_iluminacao]
 
-    for i in range(1, len(valores_rotacoes)):
-        diferenca_percentual = (valores_rotacoes[i] - valores_rotacoes[i - 1]) / valores_rotacoes[i - 1] * 100
-        if diferenca_percentual > 40 or diferenca_percentual < -40:
-            contador_rotacao += 1
+        #Conta quantidade de vezes que o sensor de rotação detectou uma movimentação "brusca"
+        for i in range(1, len(valores_rotacoes)):
+            diferenca_percentual = (valores_rotacoes[i] - valores_rotacoes[i - 1]) / valores_rotacoes[i - 1] * 100
+            if diferenca_percentual > 40 or diferenca_percentual < -40:
+                contador_rotacao += 1
+        
+        #Conta quantidade de vezes que o sensor de rotação detectou uma movimentação "brusca"
+        for i in range(1, len(valores_aceleracao_x)):
+           diferenca = abs(valores_aceleracao_x[i] - valores_aceleracao_x[i - 1])
+           if diferenca > limiar or diferenca < -limiar:
+            contador_acel1 += 1
+        
+        #Conta quantidade de vezes que o sensor de rotação detectou uma movimentação "brusca"
+        for i in range(1, len(valores_aceleracao_y)):
+            diferenca = abs(valores_aceleracao_y[i] - valores_aceleracao_y[i - 1])
+            if diferenca > limiar or diferenca < -limiar:
+                contador_acel2 += 1
+        
+        #Conta quantidade de vezes que o sensor de rotação detectou uma movimentação "brusca"
+        for i in range(1, len(valores_aceleracao_z)):
+            diferenca = abs(valores_aceleracao_z[i] - valores_aceleracao_z[i - 1])
+            if diferenca > limiar or diferenca < -limiar:
+                contador_acel3 += 1
+
+        #Conta quantidade de vezes que o sensor de luminosidade detectou uma iluminação "alta"
+        for valor in valores_iluminacao:
+            if valor > 20:
+                contador_ilum += 1
+        
+        print(f"Contador de movimentações 'abruptas' pelo sensor de rotação: {contador_rotacao}/{len(valores_rotacoes)}")
+        print(f"Contador de movimentações 'abruptas' pelo sensor de aceleração (eixo x): {contador_acel1}/{len(valores_aceleracao_x)}")
+        print(f"Contador de movimentações 'abruptas' pelo sensor de aceleração (eixo y): {contador_acel2}/{len(valores_aceleracao_y)}")
+        print(f"Contador de movimentações 'abruptas' pelo sensor de aceleração (eixo z): {contador_acel3}/{len(valores_aceleracao_z)}")
+        print(f"Contador de mudanças luminosidade 'alta': {contador_ilum}/{len(valores_iluminacao)}")
+
+        if contador_rotacao <= 5 and contador_acel3 <= 5 and contador_acel1 <= 5 and contador_acel3 <= 5:
+            print("Resultado: Não se mexeu muito durante a noite, teve um boa noite sono!")
+
+        elif contador_rotacao <= 7 and contador_acel3 <= 7 and contador_acel1 <= 7 and contador_acel3 <= 7:
+            print("Resultado: Se mexeu algumas vezes, Teve uma noite de sono pouco conturbada!")
+            print("É recomendado que medidas sejam tomadas para melhorar o sono")
+
+        else:
+            print("Resultado: Péssima noite de sono! RECOMENDA-SE QUE ISSO SEJA VERIFICADO URGENTEMENTE!")
+
+
+        if contador_ilum <= 20:
+            print("Reusltado Iluminação: Boa iluminação para uma boa noite de sono")
+        elif contador_ilum > 20 and contador_ilum <= 50:
+            print("Reusltado Iluminação: Iluminaçaõ OK, mas pode ter atrapalhado um pouco no sono")
+        else:
+            print("Reusltado Iluminação: Iluminação muito clara, recomenda-se desligar as luzes ao redor!")
+
+    option = int(input("\n1- Deseja voltar ao menu principal?\n2- Deseja ver recomendações para melhorar o sono?\n3- Deseja fazer Log-out?"))
     
-    print(f"Contador de movimentações 'abruptas': {contador_rotacao}/{len(valores_rotacoes)}")
-    
-
+    return option
 MonitoramentoSono(3)

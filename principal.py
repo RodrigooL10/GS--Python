@@ -39,13 +39,13 @@ while menu == 0:
 
 while menu == 1:
     print(f"\n\n------Bem vindo a nossa Homepage {nome_usuario}!,Quais dos serviços disponiveis você deseja acessar------")
-    option = int(input("1- Verificar monitoramento do sono \n2- Log-out\n"))
+    option = int(input("1- Verificar monitoramento do sono \n2- Ver recomendações para Melhorar Sono\n 3- Log-out\n"))
 
     if option == 1:
         print("--- Últimos monitoramentos: ---")
 
-        funcoes.simulador_batimentos_cardiacos(40, 40, 60, usuario_id)
+        decisao = funcoes.MonitoramentoSono(usuario_id)
     
-    elif option == 2:
+    elif option == 3:
         print("Tchau, até logo!")
         exit()
