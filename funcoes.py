@@ -91,13 +91,6 @@ def Recomendacoes():
     return option
 
 
-#Recomendacoes()
-
-
-
-
-
-
 
 def simulador_batimentos_cardiacos(numSimulacoes, frequencia_cardiaca_min, frequencia_cardiaca_max, id):
     count = 1
@@ -150,9 +143,6 @@ def simulador_batimentos_cardiacos(numSimulacoes, frequencia_cardiaca_min, frequ
         
         count += 1
 
-
-# Exemplo de uso: pessoa dormindo (frequência de 40 a 60 BPM)
-#simulador_batimentos_cardiacos(7, 40, 60, 2)
 
 
 def MonitoramentoSono(id):

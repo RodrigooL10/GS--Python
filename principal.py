@@ -5,6 +5,7 @@ clientes = []
 menu = 0
 
 while menu == 0:
+    print("\n--- Bem vindo ao Dream-Watch ---")
     option = int(input("1- Deseja fazer o login? \n2- Deseja fazer o cadastro?\n"))
 
     if option == 1:
@@ -31,7 +32,7 @@ while menu == 0:
             if senha != senha2 :
                 print("Por favor, verifique as informações e tente novamente.")
             else:
-                print("Informações válidas. Registro concluído!")
+                print("\n-- Informações válidas. Registro concluído! --")
                 print("Faça o login!\n\n")
                 funcoes.clientes_global(clientes, nome, email, senha)
                 option = 1 #Abre o menu principal
@@ -61,7 +62,7 @@ while menu == 1:
         if decisao == 1:
             menu = 1
             
-        elif decisao == 2:
+        else:
             print("Tchau, até logo!")
             break
     
