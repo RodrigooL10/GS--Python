@@ -39,13 +39,31 @@ while menu == 0:
 
 while menu == 1:
     print(f"\n\n------Bem vindo a nossa Homepage {nome_usuario}!,Quais dos serviços disponiveis você deseja acessar------")
-    option = int(input("1- Verificar monitoramento do sono \n2- Ver recomendações para Melhorar Sono\n 3- Log-out\n"))
+    option = int(input("1- Verificar monitoramento do sono \n2- Ver recomendações para Melhorar Sono\n3- Log-out\n"))
 
     if option == 1:
         print("--- Últimos monitoramentos: ---")
 
+        #Faz uma simulação de dados dos últimos 7 dias
         decisao = funcoes.MonitoramentoSono(usuario_id)
+
+        if decisao == 1:
+            menu = 1
+        elif decisao == 2:
+            funcoes.Recomendacoes()
+        else:
+            print("Tchau, até logo!")
+            break
+    
+    elif option == 2:
+        decisao = funcoes.Recomendacoes()
+
+        if decisao == 1:
+            menu = 1
+        else:
+            print("Tchau, até logo!")
+            break
     
     elif option == 3:
         print("Tchau, até logo!")
-        exit()
+        break

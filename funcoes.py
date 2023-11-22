@@ -57,6 +57,47 @@ def validar_informacoes(nome, email):
         return False
     return True
 
+def Recomendacoes():
+    print("\n---- RECOMENDAÇÕES PARA MELHORAR QUALIDADE DO SONO ----\n")
+
+    print("1. Mantenha um Horário Regular de Sono:")
+    print("- Estabeleça uma rotina de sono consistente.")
+
+    print("\n2. Crie um Ambiente Propício para Dormir:")
+    print("- Mantenha o quarto escuro, silencioso e fresco.")
+
+    print("\n3. Limite a Exposição à Luz antes de Dormir:")
+    print("- Evite dispositivos eletrônicos brilhantes antes de dormir.")
+    print("- Ambientes mais escuros tendem a melhorar a qualidade do sono.")
+
+    print("\n4. Evite Cafeína e Estímulos antes de Dormir:")
+    print("- Evite cafeína e alimentos estimulantes antes de dormir.")
+
+    print("\n5. Faça Atividades Relaxantes antes de Dormir:")
+    print("- Pratique atividades relaxantes antes de dormir.")
+
+    print("\n6. Mantenha uma Rotina de Exercícios Regular:")
+    print("- Exercite-se regularmente, mas evite atividades intensas à noite.")
+
+    print("\n7. Limite Sestas durante o Dia:")
+    print("- Se tirar sestas, limite-as a 20-30 minutos durante o dia.")
+
+    print("\n8. Ajuste a Alimentação Noturna:")
+    print("- Evite refeições pesadas antes de dormir.")
+
+    print("\n9. Consulte um Profissional de Saúde:")
+    print("- Se problemas persistentes de sono persistirem, consulte um profissional.")
+
+    option = int(input("\n1- Deseja voltar ao menu principal?\n2- Deseja fazer Log-out?\n"))
+    
+    return option
+
+
+#Recomendacoes()
+
+
+
+
 
 
 
@@ -107,37 +148,9 @@ def simulador_batimentos_cardiacos(numSimulacoes, frequencia_cardiaca_min, frequ
 
         #joga os dados simulados num json exclusivo para cada cliente
         with open(f"dadoscli{id}.json", "w", encoding='utf-8') as f:
-                # Escrever os dados no arquivo JSON
             json.dump(info, f, indent=4, ensure_ascii=False )
         
         count += 1
-
-
-            # print(f"\nMonitoramento {count}")
-
-            # print("\n---Dados dos sensores: ---\n")
-
-            # #Não se mexeu
-            # if rotacao == rotacao2:
-            #     print("Sensor de rotação: Não se mexeu\n")
-            # else:
-            #     print("Sensor de rotação: Se mexeu\n")
-            
-            # #Não acelerou
-            # if aceleracao_x == aceleracao_x2 and aceleracao_y == aceleracao_y2 and aceleracao_z == aceleracao_z2:
-            #     print("Sensor de aceleração: Não se mexeu\n")
-            # else:
-            #     print("Sensor de aceleração: Se mexeu\n")
-            
-
-            # if iluminacao <= 20:
-            #     print("Iluminação escura\n")
-
-            # elif iluminacao > 20 and iluminacao <= 50:
-            #     print("iluminação clara\n")
-            
-            # else:
-            #     print("Iluminação muito clara\n")
 
 
 # Exemplo de uso: pessoa dormindo (frequência de 40 a 60 BPM)
@@ -177,19 +190,19 @@ def MonitoramentoSono(id):
             if diferenca_percentual > 40 or diferenca_percentual < -40:
                 contador_rotacao += 1
         
-        #Conta quantidade de vezes que o sensor de rotação detectou uma movimentação "brusca"
+        #Conta quantidade de vezes que o sensor de aceleração (eixo x) detectou uma movimentação "brusca"
         for i in range(1, len(valores_aceleracao_x)):
            diferenca = abs(valores_aceleracao_x[i] - valores_aceleracao_x[i - 1])
            if diferenca > limiar or diferenca < -limiar:
             contador_acel1 += 1
         
-        #Conta quantidade de vezes que o sensor de rotação detectou uma movimentação "brusca"
+        #Conta quantidade de vezes que o sensor de aceleração (eixo y) detectou uma movimentação "brusca"
         for i in range(1, len(valores_aceleracao_y)):
             diferenca = abs(valores_aceleracao_y[i] - valores_aceleracao_y[i - 1])
             if diferenca > limiar or diferenca < -limiar:
                 contador_acel2 += 1
         
-        #Conta quantidade de vezes que o sensor de rotação detectou uma movimentação "brusca"
+        #Conta quantidade de vezes que o sensor de aceleração (eixo z) detectou uma movimentação "brusca"
         for i in range(1, len(valores_aceleracao_z)):
             diferenca = abs(valores_aceleracao_z[i] - valores_aceleracao_z[i - 1])
             if diferenca > limiar or diferenca < -limiar:
@@ -204,7 +217,7 @@ def MonitoramentoSono(id):
         print(f"Contador de movimentações 'abruptas' pelo sensor de aceleração (eixo x): {contador_acel1}/{len(valores_aceleracao_x)}")
         print(f"Contador de movimentações 'abruptas' pelo sensor de aceleração (eixo y): {contador_acel2}/{len(valores_aceleracao_y)}")
         print(f"Contador de movimentações 'abruptas' pelo sensor de aceleração (eixo z): {contador_acel3}/{len(valores_aceleracao_z)}")
-        print(f"Contador de mudanças luminosidade 'alta': {contador_ilum}/{len(valores_iluminacao)}")
+        print(f"Contador de altas mudanças na luminosidade : {contador_ilum}/{len(valores_iluminacao)}")
 
         if contador_rotacao <= 5 and contador_acel3 <= 5 and contador_acel1 <= 5 and contador_acel3 <= 5:
             print("Resultado: Não se mexeu muito durante a noite, teve um boa noite sono!")
@@ -224,7 +237,8 @@ def MonitoramentoSono(id):
         else:
             print("Reusltado Iluminação: Iluminação muito clara, recomenda-se desligar as luzes ao redor!")
 
-    option = int(input("\n1- Deseja voltar ao menu principal?\n2- Deseja ver recomendações para melhorar o sono?\n3- Deseja fazer Log-out?"))
+    option = int(input("\n1- Deseja voltar ao menu principal?\n2- Deseja ver recomendações para melhorar o sono?\n3- Deseja fazer Log-out?\n"))
     
     return option
-MonitoramentoSono(3)
+
+#MonitoramentoSono(3)
