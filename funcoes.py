@@ -1,7 +1,5 @@
 import json, random, re, simulacoes
 
-
-
 def verificar_login_senha(email, senha):
     with open('db.json', 'r', encoding='utf-8') as f:
         clientes = json.load(f)
@@ -241,4 +239,3 @@ def MonitoramentoSono(id):
     
     return option
 
-#MonitoramentoSono(3)

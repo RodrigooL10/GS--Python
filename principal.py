@@ -60,7 +60,8 @@ while menu == 1:
 
         if decisao == 1:
             menu = 1
-        else:
+            
+        elif decisao == 2:
             print("Tchau, até logo!")
             break
     
